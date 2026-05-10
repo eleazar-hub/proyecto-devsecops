@@ -11,11 +11,26 @@ pipeline {
 		}
 	}
 
-	stage('Construir Imagen Docker (Build)') {
-		steps {
-			echo 'Construyendo el contenedor seguro...'
-			
+	stage('Construir Imagen') {
+		steps {	
 			sh 'docker build -t mi-app-segura:latest .'
+		}
+	}
+	
+	stage('Analisis Seguridad Trivy') {
+		steps {
+			echo 'buscando vulnerabilidades criticas...'
+
+			sh 'exit 1'
+		}
+	}
+
+	stage('Despliegue Produccion') {
+		steps {
+			sh 'docker stop app-produccion || true'
+			sh 'docker rm app-produccion || true'
+			sh 'docker run -d --name app-produccion mi-app-segura:latest'
+			
 			}
 		}
 	}
