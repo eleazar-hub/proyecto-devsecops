@@ -1,8 +1,7 @@
 pipeline {
-	agent nay
+	agent any
 	
 	stages {
-
 		stage('Descargar Código') {
 			steps {
 				echo 'Clonando el repositorio desde GitHub...'
